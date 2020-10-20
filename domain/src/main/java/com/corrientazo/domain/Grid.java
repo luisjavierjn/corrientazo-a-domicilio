@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.DoubleBinaryOperator;
 
-public final class Mapa {
+public final class Grid {
 
     private int blocks;
 
@@ -41,7 +41,7 @@ public final class Mapa {
 
     DoubleBinaryOperator calculateYValue = (r, d) -> r * Math.round(Math.sin(Math.toRadians(d)));
 
-    public Mapa(int blocks) {
+    public Grid(int blocks) {
         this.blocks = blocks;
     }
 
@@ -59,11 +59,11 @@ public final class Mapa {
         Y = 0;
     }
 
-    public String doTheMath(List<Ruta> rutas, String s) {
+    public String calculateDestination(List<Route> routes, String s) {
         init();
-        for(Ruta r : rutas) {
-            apply(r.getRuta());
-            if(r.getRuta().equals(s))
+        for(Route r : routes) {
+            apply(r.getRoute());
+            if(r.getRoute().equals(s))
                 break;
         }
 

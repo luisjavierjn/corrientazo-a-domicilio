@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 import static org.junit.Assert.*;
 
-public class OutboundTest {
+public class FileWriterAdapterTest {
 
     @Before
     public void deleteTestFiles() {
@@ -22,11 +22,12 @@ public class OutboundTest {
     public void writeSomeFiles() throws IOException {
         String[] lines = {"first", "second", "third"};
 
-        FileOutput fileOutput =  new FileOutput("src/test/resources","== Reporte de entregas ==");
-        fileOutput.addNewLine(lines[0]);
-        fileOutput.addNewLine(lines[1]);
-        fileOutput.addNewLine(lines[2]);
-        fileOutput.write("out01.txt");
+        FileWriterAdapter fileWriterAdapter =  new FileWriterAdapter()
+                .setPathAndHeader("src/test/resources","== Reporte de entregas ==");
+        fileWriterAdapter.addNewLine(lines[0]);
+        fileWriterAdapter.addNewLine(lines[1]);
+        fileWriterAdapter.addNewLine(lines[2]);
+        fileWriterAdapter.write("out01.txt");
 
         try {
             File myObj = new File("src/test/resources/out01.txt");

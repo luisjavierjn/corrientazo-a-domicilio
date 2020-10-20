@@ -1,4 +1,4 @@
-package com.corrientazo.inbound;
+package com.corrientazo.support;
 
 import java.io.File;
 import java.util.EventObject;

@@ -1,5 +1,7 @@
 package com.corrientazo.outbound;
 
+import com.corrientazo.core.FileWriterPort;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -8,16 +10,20 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileOutput {
+public class FileWriterAdapter implements FileWriterPort {
 
     private String path;
     private String header;
     private List<String> lines;
 
-    public FileOutput(String path, String header) {
+    public FileWriterAdapter() {
+        this.lines = new ArrayList<>();
+    }
+
+    public FileWriterAdapter setPathAndHeader(String path, String header) {
         this.path = path;
         this.header = header;
-        this.lines = new ArrayList<>();
+        return this;
     }
 
     public void addNewLine(String line) {

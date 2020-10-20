@@ -9,65 +9,65 @@ import java.util.stream.Stream;
 
 public final class Drone implements Supplier<Drone> {
 
-    private final Mapa mapa;
-    private final List<Ruta> rutas;
-    private final List<String> posiciones;
+    private final Grid grid;
+    private final List<Route> routes;
+    private final List<String> positions;
 
-    public Drone(Mapa mapa) {
-        this.mapa = mapa;
-        this.rutas = Collections.emptyList();
-        this.posiciones = Collections.emptyList();
+    public Drone(Grid grid) {
+        this.grid = grid;
+        this.routes = Collections.emptyList();
+        this.positions = Collections.emptyList();
     }
 
-    public Drone(Mapa mapa, List<Ruta> rutas, List<String> posiciones) {
-        this.mapa = mapa;
-        this.rutas = Collections.unmodifiableList(rutas);
-        this.posiciones = Collections.unmodifiableList(posiciones);
+    public Drone(Grid grid, List<Route> routes, List<String> positions) {
+        this.grid = grid;
+        this.routes = Collections.unmodifiableList(routes);
+        this.positions = Collections.unmodifiableList(positions);
     }
 
-    public List<Ruta> getRutas() {
-        return rutas;
+    public List<Route> getRoutes() {
+        return routes;
     }
 
-    public List<String> getPosiciones() {
-        return posiciones;
+    public List<String> getPositions() {
+        return positions;
     }
 
-    public Drone addNewRuta(Ruta newRuta) {
-        List<Ruta> r = new ArrayList<>(getRutas());
-        r.add(newRuta);
-        return new Drone(mapa, r, posiciones);
+    public Drone addNewRoute(Route newRoute) {
+        List<Route> r = new ArrayList<>(getRoutes());
+        r.add(newRoute);
+        return new Drone(grid, r, positions);
     }
 
-    private String calculatePosition(List<Ruta> rutaList, String ruta) {
-        return mapa.doTheMath(rutaList, ruta);
+    private String calculatePosition(List<Route> routeList, String ruta) {
+        return grid.calculateDestination(routeList, ruta);
     }
 
     @Override
     public Drone get() {
-        List<Ruta> oldR = rutas.stream()
-                .filter(Ruta::isProcesada)
+        List<Route> oldR = routes.stream()
+                .filter(Route::isChecked)
                 .collect(Collectors.toList());
 
-        if(oldR.size() == rutas.size())
+        if(oldR.size() == routes.size())
             return this;
 
-        List<Ruta> newR = rutas.stream()
-                .filter(x -> !x.isProcesada())
-                .map(Ruta::setProcesada)
+        List<Route> newR = routes.stream()
+                .filter(x -> !x.isChecked())
+                .map(Route::check)
                 .collect(Collectors.toList());
 
-        List<String> done = rutas.stream()
-                .filter(x -> !x.isProcesada())
+        List<String> done = routes.stream()
+                .filter(x -> !x.isChecked())
                 .map(x -> calculatePosition(
-                        rutas.stream()
-                                .filter(f -> !f.isProcesada())
+                        routes.stream()
+                                .filter(f -> !f.isChecked())
                                 .collect(Collectors.toList()),
-                        x.getRuta()))
+                        x.getRoute()))
                 .collect(Collectors.toList());
 
-        return new Drone(mapa,
+        return new Drone(grid,
                 Stream.concat(oldR.stream(),newR.stream()).collect(Collectors.toList()),
-                Stream.concat(posiciones.stream(),done.stream()).collect(Collectors.toList()));
+                Stream.concat(positions.stream(),done.stream()).collect(Collectors.toList()));
     }
 }

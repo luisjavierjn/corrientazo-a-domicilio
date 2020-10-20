@@ -1,6 +1,8 @@
-package com.corrientazo.inbound;
+package com.corrientazo.support;
 
-public abstract class FileAdapter implements FileListener {
+import com.corrientazo.core.FileListenerPort;
+
+public abstract class FileListener implements FileListenerPort {
 
     @Override
     public void onCreated(FileEvent event) {

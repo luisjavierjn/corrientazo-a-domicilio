@@ -1,7 +1,8 @@
 package com.corrientazo.services;
 
+import com.corrientazo.core.DeliveryServicePort;
 import com.corrientazo.domain.Drone;
-import com.corrientazo.domain.Ruta;
+import com.corrientazo.domain.Route;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,27 +13,23 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class EntregaService {
+public class DeliveryServiceAdapter implements DeliveryServicePort {
     private List<Drone> drones;
-
-    public EntregaService(List<Drone> drones) {
-        this.drones = drones;
-    }
 
     public List<Drone> getDrones() {
         return drones;
     }
 
-    public EntregaService setDrones(List<Drone> drones) {
+    public DeliveryServiceAdapter setDrones(List<Drone> drones) {
         this.drones = drones;
         return this;
     }
 
-    public void addNewRuta(int idxDrone, Ruta newRuta) {
-        drones.set(idxDrone,drones.get(idxDrone).addNewRuta(newRuta));
+    public void addNewRoute(int idxDrone, Route newRoute) {
+        drones.set(idxDrone,drones.get(idxDrone).addNewRoute(newRoute));
     }
 
-    public void hacerLasEntregas() throws ExecutionException, InterruptedException {
+    public void makeDeliveries() throws ExecutionException, InterruptedException {
         ExecutorService pool = Executors.newFixedThreadPool(drones.size());
 
         List<CompletableFuture<Drone>> completableFutures = new ArrayList<>();

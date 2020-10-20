@@ -1,13 +1,14 @@
 package com.corrientazo.app;
 
+import com.corrientazo.core.AppFactoryPort;
+import com.corrientazo.core.DeliveryServicePort;
+import com.corrientazo.core.FileWatcherPort;
+import com.corrientazo.core.FileWriterPort;
 import com.corrientazo.domain.Drone;
-import com.corrientazo.domain.Mapa;
-import com.corrientazo.domain.Ruta;
-import com.corrientazo.inbound.FileAdapter;
-import com.corrientazo.inbound.FileEvent;
-import com.corrientazo.inbound.FileWatcher;
-import com.corrientazo.outbound.FileOutput;
-import com.corrientazo.services.EntregaService;
+import com.corrientazo.domain.Grid;
+import com.corrientazo.domain.Route;
+import com.corrientazo.support.FileListener;
+import com.corrientazo.support.FileEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,26 +19,30 @@ import java.util.concurrent.ExecutionException;
 
 public class Main {
 
-    private static final int NUMERO_DE_DRONES = 20;
-    private static final int CUADRAS_A_LA_REDONDA = 10; // se puede ampliar o reducir
-    private static final int ALMUERZOS_POR_VEZ = 3; // se puede ampliar o reducir
-    private static final String RUTA_DE_ARCHIVOS_IN = "app/src/test/resources/in";
-    private static final String RUTA_DE_ARCHIVOS_OUT = "app/src/test/resources/out";
+    private static final String FILES_PATH_IN = "app/src/test/resources/in";
+    private static final String FILES_PATH_OUT = "app/src/test/resources/out";
     private static final String HEADER = "== Reporte de entregas ==";
 
+    private static AppFactoryPort consoleAppFactory = new ConsoleAppFactory();
+
     public static void main(String[] args) throws InterruptedException {
+        final int NUMBER_OF_LUNCHES = args.length>0 ? Integer.parseInt(args[0]) : 3;
+        final int NUMBER_OF_BLOCKS = args.length>1 ? Integer.parseInt(args[1]) : 10;
+        final int NUMBER_OF_DRONES = args.length>2 ? Integer.parseInt(args[2]) : 20;
 
         List<Drone> drones = new ArrayList<>();
         int idx = 0;
-        while (idx++ < NUMERO_DE_DRONES) {
-            drones.add(new Drone(new Mapa(CUADRAS_A_LA_REDONDA)));
+        while (idx++ < NUMBER_OF_DRONES) {
+            drones.add(new Drone(new Grid(NUMBER_OF_BLOCKS)));
         }
-        final EntregaService entregaService = new EntregaService(drones);
-        final FileOutput fileOutput = new FileOutput(RUTA_DE_ARCHIVOS_OUT, HEADER);
+        final DeliveryServicePort deliveryService = consoleAppFactory.createDeliveryService();
+        deliveryService.setDrones(drones);
+        final FileWriterPort fileWriter = consoleAppFactory.createFileWriter()
+                .setPathAndHeader(FILES_PATH_OUT, HEADER);
 
-        File folder = new File(RUTA_DE_ARCHIVOS_IN);
-        FileWatcher watcher = new FileWatcher(folder);
-        watcher.addListener(new FileAdapter() {
+        File folder = new File(FILES_PATH_IN);
+        FileWatcherPort watcher = consoleAppFactory.createFileWatcher().setFolder(folder);
+        watcher.addListener(new FileListener() {
             public void onCreated(FileEvent event) {
                 try {
                     Thread.sleep(1000);
@@ -51,11 +56,11 @@ public class Main {
                 try (Scanner sc = new Scanner(event.getFile())) {
 
                     while (sc.hasNextLine()) {
-                        entregaService.addNewRuta(n, new Ruta(sc.nextLine()));
+                        deliveryService.addNewRoute(n, new Route(sc.nextLine()));
                     }
-                    entregaService.hacerLasEntregas();
-                    entregaService.getDrones().get(n).getPosiciones().forEach(fileOutput::addNewLine);
-                    fileOutput.write("out".concat(number).concat(ext));
+                    deliveryService.makeDeliveries();
+                    deliveryService.getDrones().get(n).getPositions().forEach(fileWriter::addNewLine);
+                    fileWriter.write("out".concat(number).concat(ext));
 
                 } catch (InterruptedException | ExecutionException | IOException e) {
                     e.printStackTrace();
