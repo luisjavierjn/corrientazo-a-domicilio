@@ -7,15 +7,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.corrientazo.support.FileListener;
+import com.corrientazo.support.FileEvent;
 import org.junit.Test;
 
-public class InboundTest {
+public class FileWatcherAdapterTest {
     @Test
     public void FileWatcherTest() throws IOException, InterruptedException {
         File folder = new File("src/test/resources");
         final Map<String, String> map = new HashMap<>();
-        FileWatcher watcher = new FileWatcher(folder);
-        watcher.addListener(new FileAdapter() {
+        FileWatcherAdapter watcher = new FileWatcherAdapter().setFolder(folder);
+        watcher.addListener(new FileListener() {
             public void onCreated(FileEvent event) {
                 map.put("file.created", event.getFile().getName());
             }

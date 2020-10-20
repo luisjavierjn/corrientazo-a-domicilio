@@ -1,5 +1,7 @@
 package com.corrientazo.outbound;
 
+import com.corrientazo.core.FileWriterPort;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -8,16 +10,20 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileOutput {
+public class FileWriterAdapter implements FileWriterPort {
 
     private String path;
     private String header;
     private List<String> lines;
 
-    public FileOutput(String path, String header) {
+    public FileWriterAdapter() {
+        this.lines = new ArrayList<>();
+    }
+
+    public FileWriterAdapter setPathAndHeader(String path, String header) {
         this.path = path;
         this.header = header;
-        this.lines = new ArrayList<>();
+        return this;
     }
 
     public void addNewLine(String line) {
@@ -26,13 +32,10 @@ public class FileOutput {
 
     public void write(String fileName) throws IOException {
         File fout = new File(path.concat("/").concat(fileName));
-        boolean fileExist = fout.exists();
-        try(FileOutputStream fos = new FileOutputStream(fout, fout.exists())) {
+        try(FileOutputStream fos = new FileOutputStream(fout, false)) {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-            if(!fileExist) {
-                bw.write(header);
-                bw.newLine();
-            }
+            bw.write(header);
+            bw.newLine();
             lines.forEach(l -> {
                 try {
                     bw.write(l);
