@@ -16,6 +16,7 @@
         <module>interop</module>
         <module>services</module>
         <module>interop</module>
+        <module>core</module>
     </modules>
 
 

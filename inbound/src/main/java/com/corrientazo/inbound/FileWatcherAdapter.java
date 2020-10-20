@@ -1,5 +1,9 @@
 package com.corrientazo.inbound;
 
+import com.corrientazo.support.FileEvent;
+import com.corrientazo.core.FileListenerPort;
+import com.corrientazo.core.FileWatcherPort;
+
 import static java.nio.file.StandardWatchEventKinds.*;
 import java.io.File;
 import java.io.IOException;
@@ -14,13 +18,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class FileWatcher implements Runnable {
-    protected List<FileListener> listeners = new ArrayList<>();
-    protected final File folder;
+public class FileWatcherAdapter implements Runnable, FileWatcherPort {
+    protected List<FileListenerPort> listeners = new ArrayList<>();
+    protected File folder;
     protected static final List<WatchService> watchServices = new ArrayList<>();
 
-    public FileWatcher(File folder) {
+    public FileWatcherAdapter setFolder(File folder) {
         this.folder = folder;
+        return this;
     }
 
     public void watch() {
@@ -58,40 +63,40 @@ public class FileWatcher implements Runnable {
     protected void notifyListeners(WatchEvent.Kind<?> kind, File file) {
         FileEvent event = new FileEvent(file);
         if (kind == ENTRY_CREATE) {
-            for (FileListener listener : listeners) {
+            for (FileListenerPort listener : listeners) {
                 listener.onCreated(event);
             }
             if (file.isDirectory()) {
-                new FileWatcher(file).setListeners(listeners).watch();
+                new FileWatcherAdapter().setFolder(file).setListeners(listeners).watch();
             }
         }
         else if (kind == ENTRY_MODIFY) {
-            for (FileListener listener : listeners) {
+            for (FileListenerPort listener : listeners) {
                 listener.onModified(event);
             }
         }
         else if (kind == ENTRY_DELETE) {
-            for (FileListener listener : listeners) {
+            for (FileListenerPort listener : listeners) {
                 listener.onDeleted(event);
             }
         }
     }
 
-    public FileWatcher addListener(FileListener listener) {
+    public FileWatcherAdapter addListener(FileListenerPort listener) {
         listeners.add(listener);
         return this;
     }
 
-    public FileWatcher removeListener(FileListener listener) {
+    public FileWatcherAdapter removeListener(FileListenerPort listener) {
         listeners.remove(listener);
         return this;
     }
 
-    public List<FileListener> getListeners() {
+    public List<FileListenerPort> getListeners() {
         return listeners;
     }
 
-    public FileWatcher setListeners(List<FileListener> listeners) {
+    public FileWatcherAdapter setListeners(List<FileListenerPort> listeners) {
         this.listeners = listeners;
         return this;
     }
