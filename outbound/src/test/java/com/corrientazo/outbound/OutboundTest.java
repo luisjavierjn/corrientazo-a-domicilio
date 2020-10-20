@@ -25,8 +25,6 @@ public class OutboundTest {
         FileOutput fileOutput =  new FileOutput("src/test/resources","== Reporte de entregas ==");
         fileOutput.addNewLine(lines[0]);
         fileOutput.addNewLine(lines[1]);
-        fileOutput.write("out01.txt");
-
         fileOutput.addNewLine(lines[2]);
         fileOutput.write("out01.txt");
 
