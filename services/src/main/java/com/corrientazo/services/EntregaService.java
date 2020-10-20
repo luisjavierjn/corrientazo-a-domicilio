@@ -28,8 +28,8 @@ public class EntregaService {
         return this;
     }
 
-    public void addNewRuta(Ruta newRuta) {
-        drones.set(0,drones.get(0).addNewRuta(newRuta));
+    public void addNewRuta(int idxDrone, Ruta newRuta) {
+        drones.set(idxDrone,drones.get(idxDrone).addNewRuta(newRuta));
     }
 
     public void hacerLasEntregas() throws ExecutionException, InterruptedException {

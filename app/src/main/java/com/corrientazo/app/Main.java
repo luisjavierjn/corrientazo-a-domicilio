@@ -45,14 +45,17 @@ public class Main {
                     e.printStackTrace();
                 }
 
+                String number = event.getFile().getName().split("\\.",2)[0].substring(2);
+                String ext = ".".concat(event.getFile().getName().split("\\.",2)[1]);
+                int n = Integer.parseInt(number);
                 try (Scanner sc = new Scanner(event.getFile())) {
 
                     while (sc.hasNextLine()) {
-                        entregaService.addNewRuta(new Ruta(sc.nextLine()));
+                        entregaService.addNewRuta(n, new Ruta(sc.nextLine()));
                     }
                     entregaService.hacerLasEntregas();
-                    entregaService.getDrones().forEach(d -> d.getPosiciones().forEach(fileOutput::addNewLine));
-                    fileOutput.write(event.getFile().getName());
+                    entregaService.getDrones().get(n).getPosiciones().forEach(fileOutput::addNewLine);
+                    fileOutput.write("out".concat(number).concat(ext));
 
                 } catch (InterruptedException | ExecutionException | IOException e) {
                     e.printStackTrace();
