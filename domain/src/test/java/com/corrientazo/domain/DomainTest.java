@@ -14,6 +14,9 @@ public class DomainTest {
     public static final String RUTA_A = "AAAADAI";
     public static final String RUTA_B = "AAAAAAD";
 
+    public static final String RUTA_ERR_1 = "AAAAIAX";
+    public static final String RUTA_ERR_2 = "DDDAIAAAAAAAAAAAAAAAAAAAAAAA";
+
     @Test
     public void calculateDestWithoutRutasTest() {
         Drone drone = new Drone(new Grid(10));
@@ -70,5 +73,19 @@ public class DomainTest {
 
         assertEquals(drone.getRoutes().size(),5);
         assertEquals(drone.getPositions().size(),2);
+    }
+
+    @Test
+    public void calculateDestinationsWithErrorsTest() {
+        Drone drone = new Drone(new Grid(10));
+        drone = drone.addNewRoute(new Route(RUTA_ERR_1));
+        drone = drone.addNewRoute(new Route(RUTA_ERR_2));
+        drone = drone.addNewRoute(new Route(RUTA_3));
+
+        drone = drone.get();
+
+        assertEquals(drone.getPositions().get(0),"La ruta AAAAIAX contiene un caracter inválido");
+        assertEquals(drone.getPositions().get(1),"La ruta DDDAIAAAAAAAAAAAAAAAAAAAAAAA es inalcanzable, excede 10 cuadras");
+        assertEquals(drone.getPositions().get(2),"La ruta AAIADAD no se puede procesar");
     }
 }

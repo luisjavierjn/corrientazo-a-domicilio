@@ -93,6 +93,7 @@ public final class Grid {
 
                 if(Math.abs(X) > blocks || Math.abs(Y) > blocks) {
                     err = "La ruta " + s + " es inalcanzable, excede " + blocks + " cuadras" ;
+                    init();
                     return false;
                 }
 

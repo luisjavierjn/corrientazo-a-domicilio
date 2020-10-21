@@ -36,14 +36,10 @@ public class FileWriterAdapter implements FileWriterPort {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
             bw.write(header);
             bw.newLine();
-            lines.forEach(l -> {
-                try {
-                    bw.write(l);
-                    bw.newLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+            for(String l : lines) {
+                bw.write(l);
+                bw.newLine();
+            }
             lines.clear();
             bw.close();
         }
