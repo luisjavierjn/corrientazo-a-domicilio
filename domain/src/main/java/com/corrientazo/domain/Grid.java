@@ -7,6 +7,7 @@ import java.util.function.DoubleBinaryOperator;
 public final class Grid {
 
     private int blocks;
+    private String err;
 
     private double r;
     private double d;
@@ -61,33 +62,46 @@ public final class Grid {
 
     public String calculateDestination(List<Route> routes, String s) {
         init();
+        err = "";
         for(Route r : routes) {
-            apply(r.getRoute());
+            if(apply(r.getRoute()) && !err.equals(""))
+                err = "La ruta " + r.getRoute() + " no se puede procesar";
+
             if(r.getRoute().equals(s))
                 break;
         }
 
-        return coordenadas.apply(X,Y).concat(direccion.apply(i,j));
+        return err.equals("") ? coordenadas.apply(X,Y).concat(direccion.apply(i,j)) : err;
     }
 
-    public void apply(String s) {
-        s.chars().forEach(c -> {
-            switch(c) {
-                case 'I':
-                    d += 90;
-                    i = calculateXValue.applyAsDouble(r, d);
-                    j = calculateYValue.applyAsDouble(r, d);
-                    break;
-                case 'D':
-                    d -= 90;
-                    i = calculateXValue.applyAsDouble(r, d);
-                    j = calculateYValue.applyAsDouble(r, d);
-                    break;
-                default:
-                    X += (int) i;
-                    Y += (int) j;
+    public boolean apply(String s) {
+        char[] chars = s.toCharArray();
+        for(char c : chars) {
+            if(c == 'I') {
+                d += 90;
+                i = calculateXValue.applyAsDouble(r, d);
+                j = calculateYValue.applyAsDouble(r, d);
+
+            } else if(c == 'D') {
+                d -= 90;
+                i = calculateXValue.applyAsDouble(r, d);
+                j = calculateYValue.applyAsDouble(r, d);
+
+            } else if(c == 'A') {
+                X += (int) i;
+                Y += (int) j;
+
+                if(Math.abs(X) > blocks || Math.abs(Y) > blocks) {
+                    err = "La ruta " + s + " es inalcanzable, excede " + blocks + " cuadras" ;
+                    return false;
+                }
+
+            } else {
+                err = "La ruta " + s + " contiene un caracter inválido";
+                return false;
             }
-        });
+        }
+        return true;
     }
 
 }

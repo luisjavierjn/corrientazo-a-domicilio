@@ -32,7 +32,7 @@ public class FileWriterAdapter implements FileWriterPort {
 
     public void write(String fileName) throws IOException {
         File fout = new File(path.concat("/").concat(fileName));
-        try(FileOutputStream fos = new FileOutputStream(fout, false)) {
+        try(FileOutputStream fos = new FileOutputStream(fout, fout.exists())) {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
             bw.write(header);
             bw.newLine();

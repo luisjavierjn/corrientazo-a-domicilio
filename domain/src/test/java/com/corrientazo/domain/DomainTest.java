@@ -69,6 +69,6 @@ public class DomainTest {
         drone = drone.get();
 
         assertEquals(drone.getRoutes().size(),5);
-        assertEquals(drone.getPositions().size(),5);
+        assertEquals(drone.getPositions().size(),2);
     }
 }
