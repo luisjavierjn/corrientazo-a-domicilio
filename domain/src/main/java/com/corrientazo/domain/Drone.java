@@ -68,6 +68,6 @@ public final class Drone implements Supplier<Drone> {
 
         return new Drone(grid,
                 Stream.concat(oldR.stream(),newR.stream()).collect(Collectors.toList()),
-                Stream.concat(positions.stream(),done.stream()).collect(Collectors.toList()));
+                done);
     }
 }
