@@ -70,10 +70,10 @@ First of all, below is shown the cartesian plane assigned to the Drone before ma
 
 It is known that every Drone can carry 3 lunches once it start the shipping. So we can assume that each Drone return to the headquarter only when it finish to deliver, that said, then the routes are actually nested routes, that mean, the next route description start from the last delivery destination. So let's see which would it be the path followed by a Drone with the following routes:
 
-Routes
-------
-AAAAIAA
-DDDAIAD
-AAIADAD
+Routes|
+------|
+AAAAIAA|
+DDDAIAD|
+AAIADAD|
 
 ## Implementation and usage
