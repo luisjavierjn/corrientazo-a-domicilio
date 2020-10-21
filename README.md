@@ -26,35 +26,35 @@ The packages that make up the application and their relationship with Hexagonal 
 
 Every module has its own set of unit test with JUnit4. Below is shown the result of the unit tests for each module and files:
 
-**domain**\
+**domain**<br/>
 Element|Class, %|Method, %|Line, %
 -------|--------|---------|-------
 Drone|100% (1/1)|100% (8/8)|100% (35/35)
 Grid|100% (1/1)|100% (5/5)|100% (53/53)
 Route|100% (1/1)|100% (5/5)|100% (11/11)
 
-**core**\
+**core**<br/>
 Element|Class, %|Method, %|Line, %
 -------|--------|---------|-------
 FileEvent|100% (1/1)|100% (2/2)|100% (3/3)
 FileListener|100% (1/1)|100% (3/3)|100% (4/4)
 
-**inbound**\
+**inbound**<br/>
 Element|Class, %|Method, %|Line, %
 -------|--------|---------|-------
 FileWatcherAdapter|100% (1/1)|100% (11/11)|94% (48/51)
 
-**outbound**\
+**outbound**<br/>
 Element|Class, %|Method, %|Line, %
 -------|--------|---------|-------
 FileWriterAdapter|100% (1/1)|100% (4/4)|100% (21/21)
 
-**services**\
+**services**<br/>
 Element|Class, %|Method, %|Line, %
 -------|--------|---------|-------
 DeliveryServiceAdapter|100% (1/1)|100% (5/5)|100% (18/18)
 
-**app**\
+**app**<br/>
 Element|Class, %|Method, %|Line, %
 -------|--------|---------|-------
 ConsoleAppFactory|100% (1/1)|100% (3/3)|100% (4/4)
