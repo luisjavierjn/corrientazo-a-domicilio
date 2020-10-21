@@ -59,3 +59,21 @@ Element|Class, %|Method, %|Line, %
 -------|--------|---------|-------
 ConsoleAppFactory|100% (1/1)|100% (3/3)|100% (4/4)
 Main|100% (2/2)|75% (3/4)|44% (26/59)
+
+*Note*: BDD using Cucumber was configured for this project. In the **app** module inside the test directory there are the files main.feature, Runner and RunnerSteps which are up and running but the test itself need still some work.
+
+## Assumptions
+
+First of all, below is shown the cartesian plane assigned to the Drone before making the deliveries and it can be seen that there is 10 blocks  (customizable) around from the headquarter.
+
+![Image](https://tejidosjulieth.com/Initial-Position.png)
+
+It is known that every Drone can carry 3 lunches once it start the shipping. So we can assume that each Drone return to the headquarter only when it finish to deliver, that said, then the routes are actually nested routes, that mean, the next route description start from the last delivery destination. So let's see which would it be the path followed by a Drone with the following routes:
+
+Routes
+------
+AAAAIAA
+DDDAIAD
+AAIADAD
+
+## Implementation and usage
