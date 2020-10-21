@@ -93,7 +93,8 @@ For this console project were used:
 * Java 8 
 * Maven 
 * Intellij 
-* JUnit4 
+* JUnit 4 
+* GitFlow
 * Cucumber 6. 
 
 ## Implementation and Usage 
