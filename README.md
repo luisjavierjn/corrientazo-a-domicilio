@@ -76,9 +76,15 @@ AAAAIAA|
 DDDAIAD|
 AAIADAD|
 
-*Note*: Just remember, **A** means Advance, **I** means turn left (90 grades) and **D** means turn right (-90 grades)
+*Note*: Just remember, **A** means the Drone Advance, **I** means the Drone turn left (90 grades) and **D** means the Drone turn right (-90 grades)
 
-*First delivery*
+*First delivery*: black arrow is the initial position, blue arrows are the movements and orange arrow the final move
 ![Image](https://tejidosjulieth.com/First-delivery-AAAAIAA.png)
+
+*Second delivery*: black arrow is the initial position, blue arrows are the movements and orange arrow the final move
+![Image](https://tejidosjulieth.com/Second-delivery-DDDAIAD.png)
+
+*Third delivery*: black arrow is the initial position, blue arrows are the movements and orange arrow the final move
+![Image](https://tejidosjulieth.com/Third-delivery-AAIADAD.png)
 
 ## Implementation and usage
