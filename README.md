@@ -76,4 +76,9 @@ AAAAIAA|
 DDDAIAD|
 AAIADAD|
 
+*Note*: Just remember, **A** means Advance, **I** means turn left (90 grades) and **D** means turn right (-90 grades)
+
+*First delivery*
+![Image](https://tejidosjulieth.com/First-delivery-AAAAIAA.png)
+
 ## Implementation and usage
