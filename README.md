@@ -12,7 +12,7 @@ The packages that make up the application and their relationship with Hexagonal 
 
 **domain**: this module contains all the domain objects which are related to the problem that the project is dealing with. Here we can find the following: Drone which is the device that make the shipping, Route which represent the path to follow to get to the address destination and Grid which represents an square geological map for making the Drone to be aware about what it is its location.
 
-**core**: this module contains all the Ports, that mean, the java interfaces that the application use to connect to for using some functionality. So we can find in here ports for the layers Inbound, Outbound, Services and App, where each of them encapsulate an specific behaviour through the Adapters. Some implementations suggest to put all these layers within a parent module called Infrastruture. Nevertheless, it is also useful having these layers at the same level into the project for visual accomodation and for not complicating the files structure.
+**core**: this module contains all the Ports, that means, the java interfaces that the application use to connect to for using some functionality. So we can find in here ports for the layers Inbound, Outbound, Services and App, where each of them encapsulate an specific behaviour through the Adapters. Some implementations suggest to put all these layers within a parent module called Infrastruture. Nevertheless, it is also useful having these layers at the same level into the project for visual accomodation and for not complicating the files structure.
 
 **inbound**: this module deal with reading text files, but we can create another package inside the Inbound module so we can get the same information from a database. The main reason of this module is dealing with different inputs.
 
@@ -68,7 +68,7 @@ First of all, below is shown the cartesian plane assigned to the Drone before ma
 
 ![Image](https://tejidosjulieth.com/Initial-Position.png)
 
-It is known that every Drone can carry 3 lunches once it start the shipping. So we can assume that each Drone return to the headquarter only when it finish to deliver, that said, then the routes are actually nested routes, that mean, the next route description start from the last delivery destination. So let's see which would it be the path followed by a Drone with the following routes:
+It is known that every Drone can carry 3 lunches once it start the shipping. So we can assume that each Drone return to the headquarter only when it finish to deliver, that said, then the routes are actually nested routes, that means, the next route description start from the last delivery destination. So let's see which would it be the path followed by a Drone with the following routes:
 
 Routes|
 ------|
@@ -87,10 +87,6 @@ AAIADAD|
 *Third delivery*: black arrow is the initial position, blue arrows are the movements and orange arrow the final move
 ![Image](https://tejidosjulieth.com/Third-delivery-AAIADAD.png)
 
-## Implementation and Usage 
-
-
-
 ## Tools
 
 For this console project were used: 
@@ -99,3 +95,14 @@ For this console project were used:
 * Intellij 
 * JUnit4 
 * Cucumber 6. 
+
+## Implementation and Usage 
+
+In order to make the Drones deliver lunches CompletableFuture was used for asynchronous programming. Asynchronous programming is a means of writing non-blocking code by running a task on a separate thread than the main application thread and notifying the main thread about its progress, completion or failure. That means the Drones are able to make shipping without the risk of blocking each others work.
+
+For reading the routes that every Drone had to follow the WatchService interface was implemented to monitor the filesystem, so all we need is to drop the text files into a directory to be consumed.
+
+The domain objects were programmed as immutable objects, so we are sure that the results returned by functions and methos are consistence with the information given to them through the objects. Besides, the Grid class from domain is using functional programming for componing calculations related to the destinations the Drone has to arrive according to the routes.
+
+
+
