@@ -25,11 +25,12 @@ public class Main {
 
     private static AppFactoryPort consoleAppFactory = new ConsoleAppFactory();
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
 
         final int NUMBER_OF_LUNCHES = args.length>0 ? Integer.parseInt(args[0]) : 3;
         final int NUMBER_OF_BLOCKS = args.length>1 ? Integer.parseInt(args[1]) : 10;
         final int NUMBER_OF_DRONES = args.length>2 ? Integer.parseInt(args[2]) : 20;
+        final int WAIT_VALUE = args.length>3 ? Integer.parseInt(args[3]) : 0;
 
         List<Drone> drones = new ArrayList<>();
         int idx = 0;
@@ -94,7 +95,7 @@ public class Main {
         Main m = new Main();
         System.out.println("Su Corrientazo a Domicilio");
         synchronized (m) {
-            m.wait();
+            m.wait(WAIT_VALUE);
         }
         System.out.println("Se terminaron los domicilios por hoy");
     }
