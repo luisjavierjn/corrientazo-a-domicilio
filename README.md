@@ -92,9 +92,9 @@ AAIADAD|
 For this console project were used: 
 * Java 8 
 * Maven 
-* Intellij 
+* Intellij
+* GitFlow 
 * JUnit 4 
-* GitFlow
 * Cucumber 6. 
 
 ## Implementation and Usage 
