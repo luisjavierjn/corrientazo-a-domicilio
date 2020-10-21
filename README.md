@@ -102,7 +102,7 @@ In order to make the Drones deliver lunches CompletableFuture was used for async
 
 For reading the routes that every Drone had to follow the WatchService interface was implemented to monitor the filesystem, so all we need is to drop the text files into a directory to be consumed.
 
-The domain objects were programmed as immutable objects, so we are sure that the results returned by functions and methos are consistence with the information given to them through the objects. Besides, the Grid class from domain is using functional programming for componing calculations related to the destinations the Drone has to arrive according to the routes.
+The domain objects were programmed as immutable objects, so we are sure that the results returned by functions and methods are consistence with the information given to them through the objects. Besides, the Grid class from domain is using functional programming for componing calculations related to the destinations the Drone has to arrive according to the routes.
 
-
+Regarding the usage, this is a console plain Java project, and the main function accept four parameters. The first one is number of lunches that each Drone is able to carry, the default value is three, the second parameter is the size of the grid as number of blocks, the default parameter is ten, the third parameter is the number of Drones that we have, and the fourth parameter is number of milliseconds the main function is going to be hanging waiting for input files, this las parameters is useful for running unit test over the main function so it can return in short period of time.
 
