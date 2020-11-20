@@ -107,6 +107,6 @@ The domain objects were programmed as immutable objects, so we are sure that the
 
 Regarding the usage, this is a console plain Java project, and the main function accept four parameters. The first one is number of lunches that each Drone is able to carry, the default value is three, the second parameter is the size of the grid as number of blocks, the default parameter is ten, the third parameter is the number of Drones that we have, and the fourth parameter is number of milliseconds the main function is going to be hanging waiting for input files, this las parameters is useful for running unit test over the main function so it can return in short period of time.
 
-## Assumptions
+## Youtube Video
 
-Video https://youtu.be/e1qNtutjH3M
+https://youtu.be/e1qNtutjH3M
